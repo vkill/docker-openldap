@@ -1,0 +1,6 @@
+---
+- name: Docker kong prepare
+  hosts: all
+  become: true
+
+  tasks:

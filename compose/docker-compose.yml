@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  openldap:
+    image: "${OPENLDAP_DOCKER_TAG:-osixia/openldap:1.2.2}"
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: "Example Inc."
+      LDAP_DOMAIN: "example.org"
+      LDAP_BASE_DN: ""
+      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_CONFIG_PASSWORD: "config"
+      LDAP_READONLY_USER: "false"
+      LDAP_BACKEND: "mdb"
+      LDAP_TLS: "false"
+      LDAP_REPLICATION_HOSTS: "#PYTHON2BASH:['ldap://ldap.example.org','ldap://openldap.example.org']"
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+    domainname: "example.org"
+    hostname: "example.org"
+    restart: always
+    pid: host
+    ports:
+      - "${OPENLDAP_PORT:-389}:389"
+    networks:
+      - openldap
+
+networks:
+  openldap:
