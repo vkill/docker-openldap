@@ -5,25 +5,42 @@ services:
     image: "${OPENLDAP_DOCKER_TAG:-osixia/openldap:1.2.2}"
     environment:
       LDAP_LOG_LEVEL: "256"
-      LDAP_ORGANISATION: "Example Inc."
-      LDAP_DOMAIN: "example.org"
+      LDAP_ORGANISATION: "${OPENLDAP_ORGANISATION:-Example Inc.}"
+      LDAP_DOMAIN: "${OPENLDAP_DOMAIN:-example.org}"
       LDAP_BASE_DN: ""
-      LDAP_ADMIN_PASSWORD: "admin"
-      LDAP_CONFIG_PASSWORD: "config"
+      LDAP_ADMIN_PASSWORD: "${OPENLDAP_ADMIN_PASSWORD:-admin}"
+      LDAP_CONFIG_PASSWORD: "${OPENLDAP_CONFIG_PASSWORD:-config}"
       LDAP_READONLY_USER: "false"
       LDAP_BACKEND: "mdb"
       LDAP_TLS: "false"
-      LDAP_REPLICATION_HOSTS: "#PYTHON2BASH:['ldap://ldap.example.org','ldap://openldap.example.org']"
+      LDAP_REPLICATION: "false"
       KEEP_EXISTING_CONFIG: "false"
       LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
-    domainname: "example.org"
-    hostname: "example.org"
+    volumes:
+      - openldap_database:/var/lib/ldap
+      - openldap_config:/etc/ldap/slapd.d
+    domainname: "${OPENLDAP_HOSTNAME:-openldap.example.org}"
+    hostname: "${OPENLDAP_HOSTNAME:-openldap.example.org}"
     restart: always
     pid: host
     ports:
       - "${OPENLDAP_PORT:-389}:389"
     networks:
       - openldap
+
+  phpldapadmin:
+    image: "${PHPLDAPADMIN_DOCKER_TAG:-osixia/phpldapadmin:latest}"
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "${PHPLDAPADMIN_PORT:-8080}:80"
+    networks:
+      - openldap
+
+volumes:
+  openldap_database:
+  openldap_config:
 
 networks:
   openldap:
