@@ -4,3 +4,66 @@
   become: true
 
   tasks:
+    - name: Ensure openldap_database_dir exists
+      file:
+        state: directory
+        path: "{{ openldap_database_dir }}"
+        group: "docker"
+        mode: 0775
+
+    - name: Ensure openldap_config_dir exists
+      file:
+        state: directory
+        path: "{{ openldap_config_dir }}"
+        group: "docker"
+        mode: 0775
+
+    - name: Ensure openldap_certs_dir exists
+      file:
+        state: directory
+        path: "{{ openldap_certs_dir }}"
+        group: "docker"
+        mode: 0755
+
+    - name: Touch .env
+      file:
+        path: "{{ dotenv_dir }}/.env"
+        state: touch
+        mode: 0644
+        access_time: preserve
+        modification_time: preserve
+
+    - name: Update .env
+      lineinfile:
+        path: "{{ dotenv_dir }}/.env"
+        regexp: "^{{ item.key }}="
+        line: '{{ item.key }}={{ item.value }}'
+      with_items:
+        - key: "OPENLDAP_ADMIN_PASSWORD"
+          value: "{{ openldap_admin_password }}"
+        - key: "OPENLDAP_CONFIG_PASSWORD"
+          value: "{{ openldap_config_password }}"
+        - key: "OPENLDAP_ORGANISATION"
+          value: "{{ openldap_organisation }}"
+        - key: "OPENLDAP_DOMAIN"
+          value: "{{ openldap_domain }}"
+        - key: "OPENLDAP_HOSTNAME"
+          value: "{{ openldap_hostname }}"
+        - key: "OPENLDAP_TLS"
+          value: "{{ openldap_tls }}"
+
+    - name: Copy tls files
+      copy:
+        src: "{{ item.path }}"
+        dest: "{{ openldap_certs_dir }}/{{ item.filename }}"
+        group: "docker"
+        mode: 0640
+        remote_src: "{{ openldap_tls_files_remote_src }}"
+      with_items:
+        - path: "{{ openldap_tls_crt_file }}"
+          filename: "ldap.crt"
+        - path: "{{ openldap_tls_key_file }}"
+          filename: "ldap.key"
+        - path: "{{ openldap_tls_ca_crt_file }}"
+          filename: "ca.crt"
+      when: openldap_tls
