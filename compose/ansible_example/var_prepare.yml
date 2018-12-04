@@ -13,3 +13,7 @@ openldap_tls_file_in_local: true
 openldap_tls_crt_file: ""
 openldap_tls_key_file: ""
 openldap_tls_ca_crt_file: ""
+
+openldap_database_dir: "/tmp/openldap_database"
+openldap_config_dir: "/tmp/openldap_config"
+openldap_certs_dir: "/tmp/openldap_certs"
