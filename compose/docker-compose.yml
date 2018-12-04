@@ -43,6 +43,8 @@ services:
     environment:
       PHPLDAPADMIN_LDAP_HOSTS: "openldap"
       PHPLDAPADMIN_HTTPS: "false"
+    restart: always
+    pid: host
     ports:
       - "${PHPLDAPADMIN_PORT:-8080}:80"
     networks:
