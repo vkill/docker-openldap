@@ -11,7 +11,12 @@ docker-compose up
 ### Usage
 
 ```
-Open http://localhost:8080/
+xdg-open http://localhost:8080/
+
 Login DN: cn=admin,dc=example,dc=org
 Password: admin
+```
+
+```
+ldapsearch -x -W -H ldap://localhost:389 -b "dc=example,dc=org" -D "cn=admin,dc=example,dc=org" "cn=admin"
 ```
