@@ -12,19 +12,29 @@ services:
       LDAP_CONFIG_PASSWORD: "${OPENLDAP_CONFIG_PASSWORD:-config}"
       LDAP_READONLY_USER: "false"
       LDAP_BACKEND: "mdb"
-      LDAP_TLS: "false"
+      LDAP_TLS: "${OPENLDAP_TLS:-false}"
+      LDAP_TLS_CRT_FILENAME: "ldap.crt"
+      LDAP_TLS_KEY_FILENAME: "ldap.key"
+      LDAP_TLS_CA_CRT_FILENAME: "ca.crt"
+      LDAP_TLS_ENFORCE: "false"
+      LDAP_TLS_CIPHER_SUITE: "SECURE256:-VERS-SSL3.0"
+      LDAP_TLS_PROTOCOL_MIN: "3.1"
+      LDAP_TLS_VERIFY_CLIENT: "demand"
+      LDAP_SSL_HELPER_PREFIX: "ldap"
       LDAP_REPLICATION: "false"
       KEEP_EXISTING_CONFIG: "false"
       LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
     volumes:
       - openldap_database:/var/lib/ldap
       - openldap_config:/etc/ldap/slapd.d
+      - openldap_certs:/container/service/slapd/assets/certs
     domainname: "${OPENLDAP_HOSTNAME:-openldap.example.org}"
     hostname: "${OPENLDAP_HOSTNAME:-openldap.example.org}"
     restart: always
     pid: host
     ports:
       - "${OPENLDAP_PORT:-389}:389"
+      - "${OPENLDAP_SSL_PORT:-636}:636"
     networks:
       - openldap
 
@@ -41,6 +51,7 @@ services:
 volumes:
   openldap_database:
   openldap_config:
+  openldap_certs:
 
 networks:
   openldap:
