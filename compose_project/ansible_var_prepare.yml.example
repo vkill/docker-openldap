@@ -15,8 +15,8 @@ openldap_hostname: "openldap.{{ openldap_domain }}"
 
 openldap_tls: false
 openldap_tls_files_in_local: yes
-openldap_tls_crt_file: ""
-openldap_tls_key_file: ""
-openldap_tls_ca_crt_file: ""
+openldap_tls_crt_file: "~/.acme.sh/example.org/fullchain.cer"
+openldap_tls_key_file: "~/.acme.sh/example.org/example.org.key"
+openldap_tls_ca_crt_file: "~/.acme.sh/example.org/ca.cer"
 
 phpldapadmin_port: 8080
