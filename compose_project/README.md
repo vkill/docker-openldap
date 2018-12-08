@@ -1,14 +1,17 @@
-### Run
-
-```
-ansible-playbook -i ansible_example/hosts -e "@ansible_example/var_prepare.yml" ansible_playbook_prepare.yml
-```
-
-```
-docker-compose up
-```
-
 ### Usage
+
+```
+cp ansible_hosts.example ansible_hosts
+cp ansible_var_prepare.yml.example ansible_var_prepare.yml
+```
+
+```
+bash ansible_playbook_prepare.sh -e "@ansible_var_prepare.yml" -i ansible_hosts
+```
+
+```
+bash docker-compose.sh up
+```
 
 ```
 xdg-open http://localhost:8080/

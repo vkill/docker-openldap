@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  openldap:
+    networks:
+      - default
+
+  phpldapadmin:
+    networks:
+      - default
+
+networks:
+  default:

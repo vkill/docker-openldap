@@ -1,9 +1,11 @@
 ---
-dotenv_dir: "{{ playbook_dir }}"
+openldap_root_dir: "/data_openldap"
 
-openldap_database_dir: "/tmp/openldap_database"
-openldap_config_dir: "/tmp/openldap_config"
-openldap_certs_dir: "/tmp/openldap_certs"
+openldap_dotenv_dir: "{{ openldap_root_dir }}/compose_project"
+
+openldap_database_dir: "{{ openldap_root_dir }}/openldap_database"
+openldap_config_dir: "{{ openldap_root_dir }}/openldap_config"
+openldap_certs_dir: "{{ openldap_root_dir }}/openldap_certs"
 
 openldap_admin_password: "admin"
 openldap_config_password: "config"

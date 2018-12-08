@@ -2,7 +2,7 @@ version: '3'
 
 services:
   openldap:
-    image: "${OPENLDAP_DOCKER_TAG:-osixia/openldap:1.2.2}"
+    image: "${OPENLDAP_DOCKER_TAG:-osixia/openldap:1.2.3-dev}"
     environment:
       LDAP_LOG_LEVEL: "256"
       LDAP_ORGANISATION: "${OPENLDAP_ORGANISATION:-Example Inc.}"

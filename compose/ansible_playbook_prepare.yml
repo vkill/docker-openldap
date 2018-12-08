@@ -25,9 +25,15 @@
         group: "docker"
         mode: 0755
 
+    - name: Ensure openldap_dotenv_dir exists
+      file:
+        state: directory
+        path: "{{ openldap_dotenv_dir }}"
+        mode: 0755
+
     - name: Touch .env
       file:
-        path: "{{ dotenv_dir }}/.env"
+        path: "{{ openldap_dotenv_dir }}/.env"
         state: touch
         mode: 0644
         access_time: preserve
@@ -35,7 +41,7 @@
 
     - name: Update .env
       lineinfile:
-        path: "{{ dotenv_dir }}/.env"
+        path: "{{ openldap_dotenv_dir }}/.env"
         regexp: "^{{ item.key }}="
         line: '{{ item.key }}={{ item.value }}'
       with_items:
