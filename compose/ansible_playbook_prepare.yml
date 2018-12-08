@@ -63,6 +63,8 @@
           value: "{{ openldap_hostname }}"
         - key: "OPENLDAP_TLS"
           value: "{{ openldap_tls }}"
+        - key: "PHPLDAPADMIN_PORT"
+          value: "{{ phpldapadmin_port }}"
 
     - name: Copy tls files
       copy:

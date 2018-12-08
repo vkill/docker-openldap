@@ -18,3 +18,5 @@ openldap_tls_files_in_local: yes
 openldap_tls_crt_file: ""
 openldap_tls_key_file: ""
 openldap_tls_ca_crt_file: ""
+
+phpldapadmin_port: 8080
