@@ -1,5 +1,5 @@
 ---
-openldap_root_dir: "/data_openldap"
+openldap_root_dir: "/data/data_openldap"
 
 openldap_dotenv_dir: "{{ openldap_root_dir }}/compose_project"
 
