@@ -5,17 +5,17 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ${OPENLDAP_DATABASE_DIR:-/tmp/openldap_database}
+      device: ${OPENLDAP_DATABASE_DIR:-/opt/data_openldap/openldap_database}
       o: bind
   openldap_config:
     driver: local
     driver_opts:
       type: none
-      device: ${OPENLDAP_CONFIG_DIR:-/tmp/openldap_config}
+      device: ${OPENLDAP_CONFIG_DIR:-/opt/data_openldap/openldap_config}
       o: bind
   openldap_certs:
     driver: local
     driver_opts:
       type: none
-      device: ${OPENLDAP_CERTS_DIR:-/tmp/openldap_certs}
+      device: ${OPENLDAP_CERTS_DIR:-/opt/data_openldap/openldap_certs}
       o: bind
